@@ -1,5 +1,5 @@
 import { Api, ApiListResponse, ApiPostMethods } from './base/api';
-import { ICardItem, Iall } from '/dev/web-larek-frontend/web-larek-frontend/src/types/index';
+import { ICardItem } from '/dev/web-larek-frontend/web-larek-frontend/src/types/index';
 
 
 

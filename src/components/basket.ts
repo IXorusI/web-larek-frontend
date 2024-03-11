@@ -4,7 +4,6 @@ import { EventEmitter } from './base/events';
 
 const events = new EventEmitter();
 
-
 interface IBasketModel {
     items: Map<string, number>;
     add(id: string): void;
@@ -85,16 +84,11 @@ export class BasketItemView implements IView {
         return this.container
     }
 }
-
-
-
-
 interface IBasketView {
 	items: HTMLElement[];
 	total: number;
 	selected: string[];
 }
-
 
 export class Basket extends Component<IBasketView> {
 	protected _list: HTMLElement;
@@ -130,8 +124,8 @@ export class Basket extends Component<IBasketView> {
 		}
 	}
 
-	set total(total: number) {
-		this.setText(this._total, `${total} синапсов`);
+	set total(val: number) {
+		this.setText(this._total, `${val} синапсов`);
 	}
 
 	// set selected(items: string[]) {

@@ -17,12 +17,12 @@ export class Card extends Component<ICardItem> {
 	constructor(container: HTMLElement, actions?: ICardActions) {
 		super(container);
 
-		this._title = ensureElement<HTMLElement>(`.card__title`, container);
+		this._title = container.querySelector(`.card__title`);
 		this._image = container.querySelector(`.card__image`);
 		this._button = container.querySelector(`.card__button`);
 		this._category = container.querySelector(`.card__category`);
-		this._price = ensureElement<HTMLSpanElement>(`.card__price`, container);
 		this._description = container.querySelector(`.card__text`);
+		this._price = container.querySelector(`.card__price`);
 
 		if (actions?.onClick) {
 			if (this._button) {

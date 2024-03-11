@@ -1,5 +1,5 @@
 import {Model} from "./base/Model";
-import {FormErrors, IAppState, IBasketItem, ICardItem, IOrder, IOrderForm, category} from "../types";
+import {FormErrors, IAppState, ICardItem, IOrder, IOrderForm, category} from "../types";
 
 export type CatalogChangeEvent = {
     catalog: CardItem[]
@@ -41,7 +41,7 @@ export class AppState extends Model<IAppState> {
 
     setButtonText(item: ICardItem) {
 		if (this.order.items.some((id) => id === item.id)) {
-			return 'Удалить';
+			return 'Убрать';
 		} else return 'Купить';
 	}
 
@@ -81,14 +81,13 @@ export class AppState extends Model<IAppState> {
 		);
 	}
     
+	setOrderField(field: keyof IOrderForm, value: string) {
+        this.order[field] = value;
 
-
-
-
-
-    
-
-
+        if (this.validateOrder()) {
+            this.events.emit('order:ready', this.order);
+        }
+    }
 
     validateOrder() {
         const errors: typeof this.formErrors = {};

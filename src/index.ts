@@ -121,16 +121,11 @@ events.on('basket:open', () => {
 events.on('order:open', () => {
 	modal.render({
 		content: order.render({
-			address: '',
 			valid: false,
 			errors: [],
 		}),
 	});
 });
-
-
-
-
 
 // Блокируем прокрутку страницы если открыта модалка
 events.on('modal:open', () => {
@@ -142,7 +137,7 @@ events.on('modal:close', () => {
     page.locked = false;
 });
 
-// Получаем лоты с сервера
+// Получаем карточки с сервера
 api
 	.getCardList()
 	.then(appData.setCatalog.bind(appData))
