@@ -1,4 +1,4 @@
-export type pay_source = 'онлайн' | 'При получении'
+export type pay_source = 'онлайн' | 'При получении' | string
 export type category = 'софт-скил'|'хард-скил'|'кнопка'|'дополнительное'|'другое'
 
 export interface ICardItem {
