@@ -1,14 +1,11 @@
 import { Api, ApiListResponse, ApiPostMethods } from './base/api';
-import { ICardItem } from '/dev/web-larek-frontend/web-larek-frontend/src/types/index';
+import { ICardItem } from '../types/index';
 
-
-
-export interface IlarekApi {
-    getCardList: () => Promise<ICardItem[]>;
+export interface ILarekApi {
+	getCardList: () => Promise<ICardItem[]>;
 }
 
-
-export class larekApi extends Api implements IlarekApi {
+export class larekApi extends Api implements ILarekApi {
 	readonly cdn: string;
 
 	constructor(cdn: string, baseUrl: string, options?: RequestInit) {

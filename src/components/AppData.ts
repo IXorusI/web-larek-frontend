@@ -1,45 +1,51 @@
-import {Model} from "./base/Model";
-import {FormErrors, IAppState, ICardItem, IOrder, IOrderForm, category} from "../types";
+import { Model } from './base/Model';
+import {
+	FormErrors,
+	IAppState,
+	ICardItem,
+	IOrder,
+	Сategory,
+} from '../types';
 
 export type CatalogChangeEvent = {
-    catalog: CardItem[]
+	catalog: CardItem[];
 };
 
 export class CardItem extends Model<ICardItem> {
-    id: string;
-    description?: string;
-    image?: string;
-    title: string;
-    category: category;
-    price: number | null;
+	id: string;
+	description?: string;
+	image?: string;
+	title: string;
+	category: Сategory;
+	price: number | null;
 }
 
 export class AppState extends Model<IAppState> {
-    basket: string[];
-    catalog: CardItem[];
-    cardSum: number = 0;
+	basket: string[];
+	catalog: CardItem[];
+	cardSum: number = 0;
 	order: IOrder = {
 		email: '',
 		phone: '',
-		payment: 'онлайн',
+		payment: 'online',
 		address: '',
-		sum: 0,
+		total: 0,
 		items: [],
 	};
-    preview: string | null;
-    formErrors: FormErrors = {};
+	preview: string | null;
+	formErrors: FormErrors = {};
 
-    setCatalog(items: ICardItem[]) {
-        this.catalog = items.map(item => new CardItem(item, this.events));
-        this.emitChanges('cards:changed', { catalog: this.catalog });
-    }
+	setCatalog(items: ICardItem[]) {
+		this.catalog = items.map((item) => new CardItem(item, this.events));
+		this.emitChanges('cards:changed', { catalog: this.catalog });
+	}
 
-    setPreview(item: ICardItem) {
-        this.preview = item.id;
-        this.emitChanges('preview:changed', item);
-    }
+	setPreview(item: ICardItem) {
+		this.preview = item.id;
+		this.emitChanges('preview:changed', item);
+	}
 
-    setButtonText(item: ICardItem) {
+	setButtonText(item: ICardItem) {
 		if (this.order.items.some((id) => id === item.id)) {
 			return 'Убрать';
 		} else return 'Купить';
@@ -80,25 +86,17 @@ export class AppState extends Model<IAppState> {
 			0
 		);
 	}
-    
-	setOrderField(field: keyof IOrderForm, value: string) {
-        this.order[field] = value;
 
-        if (this.validateOrder()) {
-            this.events.emit('order:ready', this.order);
-        }
-    }
-
-    validateOrder() {
-        const errors: typeof this.formErrors = {};
-        if (!this.order.email) {
-            errors.email = 'Необходимо указать email';
-        }
-        if (!this.order.phone) {
-            errors.phone = 'Необходимо указать телефон';
-        }
-        this.formErrors = errors;
-        this.events.emit('formErrors:change', this.formErrors);
-        return Object.keys(errors).length === 0;
-    }
+	validateOrder() {
+		const errors: typeof this.formErrors = {};
+		if (!this.order.email) {
+			errors.email = 'Необходимо указать email';
+		}
+		if (!this.order.phone) {
+			errors.phone = 'Необходимо указать телефон';
+		}
+		this.formErrors = errors;
+		this.events.emit('formErrors:change', this.formErrors);
+		return Object.keys(errors).length === 0;
+	}
 }

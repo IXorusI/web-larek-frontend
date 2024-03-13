@@ -1,16 +1,16 @@
 import './scss/styles.scss';
-import { EventEmitter } from "./components/base/events";
+import { EventEmitter } from './components/base/events';
 import { cloneTemplate, createElement, ensureElement } from './utils/utils';
-import { API_URL, CDN_URL } from "./utils/constants";
-import { Basket, BasketModel, BasketView, BasketItemView } from "./components/basket";
-import { larekApi } from "./components/larekAPI";
+import { API_URL, CDN_URL } from './utils/constants';
+import { Basket } from './components/basket';
+import { larekApi } from './components/larekAPI';
 import { AppState, CatalogChangeEvent, CardItem } from './components/AppData';
 import { ICardItem } from './types';
-import { Page } from "./components/Page";
-import { Modal } from "./components/modal";
-import { Order } from "./components/Order";
-import { Card, BasketItem } from "./components/Card";
-import { Api } from "./components/base/api";
+import { Page } from './components/Page';
+import { Modal } from './components/modal';
+import { Order } from './components/Order';
+import { Card, BasketItem } from './components/Card';
+import { Api } from './components/base/api';
 
 const api = new larekApi(CDN_URL, API_URL);
 const events = new EventEmitter();
@@ -34,12 +34,12 @@ const basket = new Basket(cloneTemplate(basketTemplate), events);
 const order = new Order(cloneTemplate(orderTemplate), events);
 
 events.onAll(({ eventName, data }) => {
-    console.log(eventName, data);
-})
+	console.log(eventName, data);
+});
 
-console.log(api)
-const test = api.getCardList()
-console.log(test)
+console.log(api);
+const test = api.getCardList();
+console.log(test);
 
 events.on<CatalogChangeEvent>('cards:changed', () => {
 	page.catalog = appData.catalog.map((item) => {
@@ -54,8 +54,8 @@ events.on<CatalogChangeEvent>('cards:changed', () => {
 			price: item.price,
 		});
 	});
-	
-//    page.counter = appData.getClosedLots().length;
+
+	//    page.counter = appData.getClosedLots().length;
 });
 
 // Отправить в превью карточку
@@ -129,12 +129,12 @@ events.on('order:open', () => {
 
 // Блокируем прокрутку страницы если открыта модалка
 events.on('modal:open', () => {
-    page.locked = true;
+	page.locked = true;
 });
 
 // ... и разблокируем
 events.on('modal:close', () => {
-    page.locked = false;
+	page.locked = false;
 });
 
 // Получаем карточки с сервера

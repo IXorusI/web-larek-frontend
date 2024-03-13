@@ -1,9 +1,9 @@
-import {Component} from "./base/Component";
-import {ICardItem, category} from "../types";
-import {bem, createElement, ensureElement} from "../utils/utils";
+import { Component } from './base/Component';
+import { ICardItem, Сategory } from '../types';
+import { bem, createElement, ensureElement } from '../utils/utils';
 
 interface ICardActions {
-    onClick: (event: MouseEvent) => void;
+	onClick: (event: MouseEvent) => void;
 }
 
 export class Card extends Component<ICardItem> {
@@ -82,7 +82,7 @@ export class Card extends Component<ICardItem> {
 		this.setImage(this._image, value, this.title);
 	}
 
-    set button(value: string) {
+	set button(value: string) {
 		this.setText(this._button, value);
 	}
 }
@@ -111,18 +111,12 @@ export class BasketItem extends Card {
 	set index(index: number) {
 		this.setText(this._index, index);
 	}
-
 }
-
-
 
 // export type CatalogItemStatus = {
 //     status: LotStatus,
 //     label: string
 // };
-
-
-
 
 // export class Auction extends Component<AuctionStatus> {
 //     protected _time: HTMLElement;
