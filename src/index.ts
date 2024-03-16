@@ -4,7 +4,7 @@ import { cloneTemplate, ensureElement } from './utils/utils';
 import { API_URL, CDN_URL } from './utils/constants';
 import { Basket } from './components/basket';
 import { larekApi } from './components/larekAPI';
-import { AppState, CatalogChangeEvent, CardItem } from './components/AppData';
+import { AppState, CatalogChangeEvent } from './components/AppData';
 import { IOrder, ICardItem } from './types';
 import { Page } from './components/Page';
 import { Modal } from './components/modal';
