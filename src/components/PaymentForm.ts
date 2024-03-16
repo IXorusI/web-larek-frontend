@@ -46,6 +46,5 @@ export class PaymentForm extends Form<IPaymentForm> {
 
 	cancelPayment() {
 		this.toggleClass(this._cardButton, 'button_alt-active', false);
-		this.toggleClass(this._cashButton, 'button_alt-active', false);
 	}
 }

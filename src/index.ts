@@ -1,6 +1,6 @@
 import './scss/styles.scss';
 import { EventEmitter } from './components/base/events';
-import { cloneTemplate, createElement, ensureElement } from './utils/utils';
+import { cloneTemplate, ensureElement } from './utils/utils';
 import { API_URL, CDN_URL } from './utils/constants';
 import { Basket } from './components/basket';
 import { larekApi } from './components/larekAPI';

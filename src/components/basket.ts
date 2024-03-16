@@ -47,6 +47,4 @@ export class Basket extends Component<IBasketView> {
 	set total(val: number) {
 		this.setText(this._total, `${val} синапсов`);
 	}
-
-
 }

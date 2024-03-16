@@ -7,14 +7,14 @@ export class Success extends Component<ISuccess> {
     protected _description: HTMLParagraphElement;
 	protected _close: HTMLElement;
 
-	constructor(container: HTMLElement, actions: ISuccess) {
+	constructor(container: HTMLElement, events: ISuccess) {
 		super(container);
 
         this._description = ensureElement<HTMLParagraphElement>(`.order-success__description`, container);
 		this._close = ensureElement<HTMLElement>('.order-success__close',this.container);
 
-		if (actions?.onClick) {
-			this._close.addEventListener('click', actions.onClick);
+		if (events?.onClick) {
+			this._close.addEventListener('click', events.onClick);
 		}
 	}
 
