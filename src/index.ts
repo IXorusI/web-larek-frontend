@@ -5,12 +5,13 @@ import { API_URL, CDN_URL } from './utils/constants';
 import { Basket } from './components/basket';
 import { larekApi } from './components/larekAPI';
 import { AppState, CatalogChangeEvent, CardItem } from './components/AppData';
-import { ICardItem } from './types';
+import { IOrder, ICardItem } from './types';
 import { Page } from './components/Page';
 import { Modal } from './components/modal';
-import { Order } from './components/Order';
+import { ContactsForm } from './components/ContactsForm';
+import { PaymentForm } from './components/PaymentForm';
+import { Success } from './components/Success';
 import { Card, BasketItem } from './components/Card';
-import { Api } from './components/base/api';
 
 const api = new larekApi(CDN_URL, API_URL);
 const events = new EventEmitter();
@@ -29,18 +30,12 @@ const appData = new AppState({}, events);
 // Глобальные контейнеры
 const page = new Page(document.body, events);
 const modal = new Modal(ensureElement<HTMLElement>('#modal-container'), events);
-
 const basket = new Basket(cloneTemplate(basketTemplate), events);
-const order = new Order(cloneTemplate(orderTemplate), events);
+const paymentForm = new PaymentForm(cloneTemplate(orderTemplate), events);
+const contactsForm = new ContactsForm(cloneTemplate(contactsTemplate), events);
 
-events.onAll(({ eventName, data }) => {
-	console.log(eventName, data);
-});
 
-console.log(api);
-const test = api.getCardList();
-console.log(test);
-
+// Изменились элементы каталога
 events.on<CatalogChangeEvent>('cards:changed', () => {
 	page.catalog = appData.catalog.map((item) => {
 		const card = new Card(cloneTemplate(cardCatalogTemplate), {
@@ -54,8 +49,6 @@ events.on<CatalogChangeEvent>('cards:changed', () => {
 			price: item.price,
 		});
 	});
-
-	//    page.counter = appData.getClosedLots().length;
 });
 
 // Отправить в превью карточку
@@ -120,11 +113,81 @@ events.on('basket:open', () => {
 // Открыть форму заказа
 events.on('order:open', () => {
 	modal.render({
-		content: order.render({
+		content: paymentForm.render({
+			address: '',
 			valid: false,
 			errors: [],
 		}),
 	});
+});
+
+// Переключение вида оплаты товара
+events.on(
+	'order:change payment',
+	(data: { payment: string; button: HTMLElement }) => {
+		appData.setOrderPayment(data.payment);
+		paymentForm.togglePayment(data.button);
+		appData.validateOrder();
+	}
+);
+
+// Открытие формы контактов заказа
+events.on('order:submit', () => {
+	modal.render({
+		content: contactsForm.render({
+			email: '',
+			phone: '',
+			valid: false,
+			errors: [],
+		}),
+	});
+});
+
+// Изменение поля инпут
+events.on(
+	/^order\..*:change/,
+	(data: {
+		field: keyof Pick<IOrder, 'address' | 'phone' | 'email'>;
+		value: string;
+	}) => {
+		appData.setOrderField(data.field, data.value);
+	}
+);
+
+// Отправлена форма заказа
+events.on('contacts:submit', () => {
+	appData.sendCardsFromOrder();
+	api
+		.orderProducts(appData.order)
+		.then((result) => {
+			const success = new Success(cloneTemplate(successTemplate), {
+				onClick: () => {
+					modal.close();
+				},
+			});
+			modal.render({
+				content: success.render({
+					total: result.total,
+				}),
+			});
+			appData.clearBasket();
+		})
+		.catch((err) => {
+			console.error(err);
+		});
+});
+
+// Изменилось состояние валидации
+events.on('formErrors:change', (errors: Partial<IOrder>) => {
+	const { address, payment, phone, email } = errors;
+	paymentForm.valid = !payment && !address;
+	paymentForm.errors = Object.values({ payment, address })
+		.filter((i) => !!i)
+		.join('; ');
+	contactsForm.valid = !phone && !email;
+	contactsForm.errors = Object.values({ phone, email })
+		.filter((i) => !!i)
+		.join('; ');
 });
 
 // Блокируем прокрутку страницы если открыта модалка

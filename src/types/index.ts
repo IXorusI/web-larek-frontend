@@ -1,4 +1,4 @@
-type PaySource = 'online' | 'offline';
+type PaySource = 'online' | 'offline' | string;
 export type Сategory =
 	| 'софт-скил'
 	| 'хард-скил'
@@ -15,20 +15,12 @@ export interface ICardItem {
 	price?: number | null;
 	button?: string;
 }
-// export interface ICardList {
-//     total: number;
-// 	items: ICardItem[];
-// }
-
-//export type Icard = ICardItem  & ICardList;
 
 export interface IAppState {
-	//    catalog: Icard[];
 	catalog: ICardItem[];
-	basket: string[];
+	basket: ICardItem[];
 	preview: string | null;
 	order: IOrder | null;
-	loading: boolean;
 }
 export interface IPaymentForm {
 	payment: PaySource;
@@ -48,4 +40,9 @@ export type FormErrors = Partial<Record<keyof IOrder, string>>;
 export interface IOrderResult {
 	id: string;
     total: number;
+}
+
+export interface ISuccess {
+	total?: number;
+	onClick: () => void;
 }

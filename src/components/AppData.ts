@@ -21,13 +21,13 @@ export class CardItem extends Model<ICardItem> {
 }
 
 export class AppState extends Model<IAppState> {
-	basket: string[];
-	catalog: CardItem[];
+	basket: ICardItem[] = [];
+	catalog: ICardItem[] = [];
 	cardSum: number = 0;
 	order: IOrder = {
 		email: '',
 		phone: '',
-		payment: 'online',
+		payment: '',
 		address: '',
 		total: 0,
 		items: [],
@@ -72,6 +72,13 @@ export class AppState extends Model<IAppState> {
 		}
 	}
 
+	sendCardsFromOrder() {
+		this.basket.forEach(
+			(item) => (this.order.items = [...this.order.items, item.id])
+		);
+		this.order.total = this.getTotal();
+	}
+
 	deleteCardFromOrder(item: ICardItem) {
 		if (this.order.items.some((id) => id === item.id)) {
 			this.order.items = this.order.items.filter((id) => item.id !== id);
@@ -92,11 +99,42 @@ export class AppState extends Model<IAppState> {
 		if (!this.order.email) {
 			errors.email = 'Необходимо указать email';
 		}
+
 		if (!this.order.phone) {
 			errors.phone = 'Необходимо указать телефон';
 		}
+
+		if (!this.order.address) {
+			errors.address = 'Необходимо указать адрес доставки';
+		}
+
+		if (!this.order.payment) {
+			errors.payment = 'Необходимо указать способ оплаты';
+		}
+
 		this.formErrors = errors;
 		this.events.emit('formErrors:change', this.formErrors);
 		return Object.keys(errors).length === 0;
+	}
+
+	setOrderPayment(value: string) {
+		if (this.order.payment !== value) this.order.payment = value;
+	}
+
+	setOrderAddress(value: string) {
+		this.order.address = value;
+	}
+
+	setOrderField(
+		field: keyof Pick<IOrder, 'address' | 'phone' | 'email'>,
+		value: string
+	) {
+		this.order[field] = value;
+		this.validateOrder();
+	}
+
+	clearBasket() {
+		this.basket = [];
+		this.emitChanges('basket:changed');
 	}
 }

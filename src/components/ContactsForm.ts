@@ -1,9 +1,9 @@
 import { Form } from './Form';
 import { IContactsForm } from '../types';
-import { EventEmitter, IEvents } from './base/events';
-import { ensureElement } from '../utils/utils';
+import { IEvents } from './base/events';
 
-export class Order extends Form<IContactsForm> {
+
+export class ContactsForm extends Form<IContactsForm> {
 	constructor(container: HTMLFormElement, events: IEvents) {
 		super(container, events);
 	}
@@ -13,8 +13,8 @@ export class Order extends Form<IContactsForm> {
 			value;
 	}
 
-	set address(value: string) {
-		(this.container.elements.namedItem('address') as HTMLInputElement).value =
+	set email(value: string) {
+		(this.container.elements.namedItem('email') as HTMLInputElement).value =
 			value;
 	}
 }
