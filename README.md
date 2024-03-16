@@ -66,12 +66,12 @@ type Сategory =
 	| 'дополнительное'
 	| 'другое';
 
-Тип FormErrors
-Содержит ошибки заполнения полей заказа
-type FormErrors = Partial<Record<keyof IOrder, string>>;
+Тип FormErrors  
+Содержит ошибки заполнения полей заказа  
+type FormErrors = Partial<Record<keyof IOrder, string>>;  
 
-Интерфейс ICardItem
-Описывает типы для потей карточки товара
+Интерфейс ICardItem  
+Описывает типы для потей карточки товара  
 interface ICardItem {
 	id: string;
 	description?: string;
@@ -80,48 +80,48 @@ interface ICardItem {
 	category?: Сategory;
 	price?: number | null;
 	button?: string;
-}
+}  
 
-Интерфейс IAppState
-Описывает типы для класса хранения данных
+Интерфейс IAppState  
+Описывает типы для класса хранения данных  
 interface IAppState {
 	catalog: ICardItem[];
 	basket: string[];
 	preview: string | null;
 	order: IOrder | null;
 	loading: boolean;
-}
+}  
 
-Интерфейс IPaymentForm
-Описывает форму выбора типа оплаты и адреса доставки
+Интерфейс IPaymentForm  
+Описывает форму выбора типа оплаты и адреса доставки  
 interface IPaymentForm {
 	payment: PaySource;
 	address: string;
-}
+}  
 
-Интерфейс IContactsForm
-Описывает форму заполнения личных данных (телефон и email)
+Интерфейс IContactsForm  
+Описывает форму заполнения личных данных (телефон и email)  
 interface IContactsForm {
 	email: string;
 	phone: string;
 }
 
-Интерфейс IOrder, расширяет интерфейсы IPaymentForm и IContactsForm
-В дополнении к типам расширяемых интерфейсов, описывает массив товаров и сумму заказа 
+Интерфейс IOrder, расширяет интерфейсы IPaymentForm и IContactsForm  
+В дополнении к типам расширяемых интерфейсов, описывает массив товаров и сумму заказа   
 interface IOrder extends IContactsForm, IPaymentForm {
 	items: string[];
 	total: number;
 }
 
-Интерфейс IOrderResult
-Содержит тимы id заказа и его суммы
+Интерфейс IOrderResult  
+Содержит тимы id заказа и его суммы  
 interface IOrderResult {
 	id: string;
     total: number;
 }
 
-Интерфейс ISuccess
-Описывает форму окна подтверждения заказа и кнопку этого поля
+Интерфейс ISuccess  
+Описывает форму окна подтверждения заказа и кнопку этого поля  
 interface ISuccess {
 	total?: number;
 	onClick: () => void;
@@ -130,12 +130,12 @@ interface ISuccess {
 
 ## Описание базовых классов
 
-Класс Api
-    Принимает в конструктор адрес сервера для обращений и данные инициализации запроса (Content-Type)
-    Реализовывает методы:
-    - handleResponse - для проверки ответа от методов get и post
-    - get - для получения от сервера, принимающий параметр uri
-    - post - для отправки данных на сервер, принимающий uri ссылку, объект и метод запроса
+Класс Api  
+    Принимает в конструктор адрес сервера для обращений и данные инициализации запроса (Content-Type)  
+    Реализовывает методы:  
+    * handleResponse - для проверки ответа от методов get и post  
+    * get - для получения от сервера, принимающий параметр uri  
+    * post - для отправки данных на сервер, принимающий uri ссылку, объект и метод запроса  
 
 Абстрактный класс Component<T>
     Принимает в конструктор HTML элементы
