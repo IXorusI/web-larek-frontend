@@ -59,74 +59,74 @@ type PaySource = 'online' | 'offline';
   
 #### Тип Сategory    
 Учитывает различные категории, в которых может находиться товар     
-type Сategory =
-	| 'софт-скил'
-	| 'хард-скил'
-	| 'кнопка'
-	| 'дополнительное'
-	| 'другое';
+*type Сategory =  
+	| 'софт-скил'  
+	| 'хард-скил'  
+	| 'кнопка'  
+	| 'дополнительное'  
+	| 'другое';*
 
 #### Тип FormErrors  
 Содержит ошибки заполнения полей заказа  
-type FormErrors = Partial<Record<keyof IOrder, string>>;  
+*type FormErrors = Partial<Record<keyof IOrder, string>>;  *
 
 #### Интерфейс ICardItem  
 Описывает типы для потей карточки товара  
-interface ICardItem {
-	id: string;
-	description?: string;
-	image?: string;
-	title: string;
-	category?: Сategory;
-	price?: number | null;
+*interface ICardItem {  
+	id: string;  
+	description?: string;  
+	image?: string;  
+	title: string;  
+	category?: Сategory;  
+	price?: number | null;  
 	button?: string;
-}  
+}  *
 
 #### Интерфейс IAppState  
 Описывает типы для класса хранения данных  
-interface IAppState {
-	catalog: ICardItem[];
-	basket: string[];
-	preview: string | null;
-	order: IOrder | null;
+*interface IAppState {  
+	catalog: ICardItem[];  
+	basket: string[];  
+	preview: string | null;  
+	order: IOrder | null;  
 	loading: boolean;
-}  
+}  *
 
 #### Интерфейс IPaymentForm  
 Описывает форму выбора типа оплаты и адреса доставки  
-interface IPaymentForm {
-	payment: PaySource;
+*interface IPaymentForm {  
+	payment: PaySource;  
 	address: string;
-}  
+}  *
 
 #### Интерфейс IContactsForm  
 Описывает форму заполнения личных данных (телефон и email)  
-interface IContactsForm {
-	email: string;
+*interface IContactsForm {  
+	email: string;  
 	phone: string;
-}
+}*
 
 #### Интерфейс IOrder, расширяет интерфейсы IPaymentForm и IContactsForm  
 В дополнении к типам расширяемых интерфейсов, описывает массив товаров и сумму заказа   
-interface IOrder extends IContactsForm, IPaymentForm {
-	items: string[];
+*interface IOrder extends IContactsForm, IPaymentForm {  
+	items: string[];  
 	total: number;
 }
-
+*
 #### Интерфейс IOrderResult  
 Содержит тимы id заказа и его суммы  
-interface IOrderResult {
-	id: string;
+*interface IOrderResult {  
+	id: string;  
     total: number;
-}
+}*
 
 #### Интерфейс ISuccess  
 Описывает форму окна подтверждения заказа и кнопку этого поля  
-interface ISuccess {
-	total?: number;
+*interface ISuccess {  
+	total?: number;  
 	onClick: () => void;
 }
-
+*
 
 ## Описание базовых классов
 
