@@ -79,7 +79,7 @@ type PaySource = 'online' | 'offline';
 	title: string;  
 	category?: Сategory;  
 	price?: number | null;  
-	button?: string;
+	button?: string;  
 }  *
 
 #### Интерфейс IAppState  
@@ -89,42 +89,42 @@ type PaySource = 'online' | 'offline';
 	basket: string[];  
 	preview: string | null;  
 	order: IOrder | null;  
-	loading: boolean;
+	loading: boolean;  
 }  *
 
 #### Интерфейс IPaymentForm  
 Описывает форму выбора типа оплаты и адреса доставки  
 *interface IPaymentForm {  
-	payment: PaySource;  
-	address: string;
+    payment: PaySource;  
+    address: string;  
 }  *
 
 #### Интерфейс IContactsForm  
 Описывает форму заполнения личных данных (телефон и email)  
 *interface IContactsForm {  
 	email: string;  
-	phone: string;
+	phone: string;  
 }*
 
 #### Интерфейс IOrder, расширяет интерфейсы IPaymentForm и IContactsForm  
 В дополнении к типам расширяемых интерфейсов, описывает массив товаров и сумму заказа   
 *interface IOrder extends IContactsForm, IPaymentForm {  
 	items: string[];  
-	total: number;
+	total: number;  
 }
 *
 #### Интерфейс IOrderResult  
 Содержит тимы id заказа и его суммы  
 *interface IOrderResult {  
 	id: string;  
-    total: number;
+    total: number;  
 }*
 
 #### Интерфейс ISuccess  
 Описывает форму окна подтверждения заказа и кнопку этого поля  
 *interface ISuccess {  
 	total?: number;  
-	onClick: () => void;
+	onClick: () => void;  
 }
 *
 
