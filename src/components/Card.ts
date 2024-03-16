@@ -1,6 +1,7 @@
 import { Component } from './base/Component';
-import { ICardItem, Сategory } from '../types';
-import { bem, createElement, ensureElement } from '../utils/utils';
+import { categoryMap } from '../utils/constants'
+import { ICardItem } from '../types';
+import { ensureElement } from '../utils/utils';
 
 interface ICardActions {
 	onClick: (event: MouseEvent) => void;
@@ -59,6 +60,7 @@ export class Card extends Component<ICardItem> {
 
 	set category(value: string) {
 		this.setText(this._category, value);
+		this.toggleClass(this._category, categoryMap.get(value), true);
 	}
 
 	get category(): string {
@@ -96,16 +98,10 @@ export class BasketItem extends Card {
 	constructor(container: HTMLElement, actions?: ICardActions) {
 		super(container, actions);
 
-		this._index = ensureElement<HTMLElement>(
-			'.basket__item-index',
-			this.container
-		);
+		this._index = ensureElement<HTMLElement>('.basket__item-index',this.container);
 		this._title = ensureElement<HTMLElement>('.card__title', this.container);
 		this._price = ensureElement<HTMLElement>('.card__price', this.container);
-		this._deleteButton = ensureElement<HTMLElement>(
-			'.basket__item-delete',
-			this.container
-		);
+		this._deleteButton = ensureElement<HTMLElement>('.basket__item-delete',this.container);
 	}
 
 	set index(index: number) {

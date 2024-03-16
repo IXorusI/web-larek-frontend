@@ -34,7 +34,6 @@ const basket = new Basket(cloneTemplate(basketTemplate), events);
 const paymentForm = new PaymentForm(cloneTemplate(orderTemplate), events);
 const contactsForm = new ContactsForm(cloneTemplate(contactsTemplate), events);
 
-
 // Изменились элементы каталога
 events.on<CatalogChangeEvent>('cards:changed', () => {
 	page.catalog = appData.catalog.map((item) => {
@@ -144,8 +143,7 @@ events.on('order:submit', () => {
 });
 
 // Изменение поля инпут
-events.on(
-	/^order\..*:change/,
+events.on(/^order\..*:change/,
 	(data: {
 		field: keyof Pick<IOrder, 'address' | 'phone' | 'email'>;
 		value: string;

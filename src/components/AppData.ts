@@ -134,6 +134,14 @@ export class AppState extends Model<IAppState> {
 	}
 
 	clearBasket() {
+		this.order = {
+			email: '',
+			phone: '',
+			payment: '',
+			address: '',
+			total: 0,
+			items: [],
+		};
 		this.basket = [];
 		this.emitChanges('basket:changed');
 	}
